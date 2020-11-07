@@ -7,75 +7,85 @@ Created on Mon Nov  2 15:26:15 2020
 
 Dataloader for Hedia food recognition project
 """
-import os
+# Import dependancies
+import torchvision.datasets as datasets
+import numpy as np
 import torch
-import cv2
-import torch.utils.data
-from torch.utils.data import DataLoader
-import matplotlib.pyplot as plt
+import torchvision.transforms as transforms
 
-dic_path = '/home/hso/Documents/FoodRecognition/VOC2007/ImageSets/Main'
-object_categories = ['boiled_peas', 'boiled_potatoes', 'chopped_lettuce', 'fried_egg',
+# Transform images
+transform = transforms.Compose(
+    [transforms.Resize([256,256]),transforms.ToTensor(),
+     transforms.Normalize((0.5, 0.5, 0.5),(0.5, 0.5, 0.5))
+    ]
+)
+
+# Import VOC-dataset
+voc_trainset = datasets.VOCDetection('/home/hso/Documents/FoodRecognition',year='2007', image_set='train',transform=transform)
+voc_testset = datasets.VOCDetection('/home/hso/Documents/FoodRecognition',year='2007', image_set='test',transform=transform)
+
+# Import VOC-dataset
+voc_trainvalset = datasets.VOCDetection('/home/hso/Documents/FoodRecognition',year='2007', image_set='trainval',transform=transform)
+voc_valset = datasets.VOCDetection('/home/hso/Documents/FoodRecognition',year='2007', image_set='val',transform=transform)
+
+print(voc_trainset[0])
+# Print sizes
+print('-'*40)
+print('VOC2007-train')
+print(len(voc_trainset))
+print(voc_trainset)
+
+print('-'*40)
+print('VOC2007-test')
+print(len(voc_testset))
+print(voc_testset)
+
+print('-'*40)
+print('VOC2007-trainval')
+print(len(voc_trainvalset))
+print(voc_trainvalset)
+
+print('-'*40)
+print('VOC2007-val')
+print(len(voc_valset))
+print(voc_valset)
+
+"""
+# Print shape of each image
+for i, sample in enumerate(voc_trainset, 1):
+    image, annotation = sample[0], sample[1]['annotation']
+    objects = annotation['object']
+    show_image = np.array(image)
+    print('{} object:{}'.format(i, len(objects)))
+    print(show_image.shape)
+"""
+
+trainloader = torch.utils.data.DataLoader(voc_trainset, batch_size=4,
+                                          shuffle=True, num_workers=2)
+testloader = torch.utils.data.DataLoader(voc_testset, batch_size=4,
+                                         shuffle=True, num_workers=2)
+print('trainloader')
+
+
+train_data_iter = iter(trainloader)
+test_data_iter = iter(testloader)
+
+"""
+classes = ('boiled_peas', 'boiled_potatoes', 'chopped_lettuce', 'fried_egg',
         'glass_of_milk', 'glass_of_water', 'meatballs', 'plain_rice', 'plain_spaghetti',
-        'slice_of_bread']
-train_all = []
-val_all = []
+        'slice_of_bread')
+print('used classes:', classes)
+""" 
 
-def read_all():
-    files = os.listdir(dic_path)
-    for fi in files:
-        if('trainval' not in fi):
-            num = 1
-            for i,str in enumerate(object_categories,1):
-                if (str in fi):
-                    num = i
-                    break
-            if('train' in fi):
-                f = open(dic_path+"/"+fi)
-                iter_f = iter(f)
-                for line in iter_f:
-                    line = line[0:11]
-                    train_all.append([line,num])
-            else:
-                f = open(dic_path+"/"+fi)
-                iter_f = iter(f)
-                for line in iter_f:
-                    line = line[0:11]
-                    val_all.append([line,num])
-read_all()
+print("# Training data")
+print("Number of points:", len(voc_trainset))
+x, y = next(iter(trainloader))
+print("Batch dimension [B x C x H x W]:", x.shape)
+print("Number of distinct labels:", len(set(voc_trainset.targets)))
 
-class Data(torch.utils.data.Dataset):
-    def __init__(self,li,transform=None,size=(224,224)):
-        self.transform = transform
-        self.size = size
-        self.img = []
-        self.lab = []
-        for i in li:
-            self.img.append(i[0])
-            self.lab.append(int(i[1]))
-    def __getitem__(self, index):
-        img_path = '/home/hso/Documents/FoodRecognition/VOC2007/JPEGImages'+self.img[index]+'.jpg'
-        image = cv2.imread(img_path)
-        image = cv2.resize(image,self.size)
-        image = self.transform(image)
-        label = torch.LongTensor([self.lab[index]])
-        return image,label
-    def __len__(self):
-        return len(self.img)
-trainset = Data(train_all,transform)
-train_loader = DataLoader(trainset,batch_size=40,shuffle=True,num_workers=0)
-valset = Data(val_all,transform)
-val_loader = DataLoader(valset,batch_size=40,shuffle=True,num_workers=0)
 
-#plot a few examples
-f, axarr = plt.subplots(4, 16, figsize=(16, 4))
-
-# Load a batch of images into memory
-images, labels = next(iter(train_loader))
-
-for i, ax in enumerate(axarr.flat):
-    ax.imshow(images[i].view(28, 28), cmap="binary_r")
-    ax.axis('off')
-    
-plt.suptitle('Food recognition data')
-plt.show()
+print("\n# Test data")
+print("Number of points:", len(voc_testset))
+x, y = next(iter(testloader))
+print("Batch dimension [B x C x H x W]:", x.shape)
+print("Number of distinct labels:", len(set(voc_testset.targets)))
