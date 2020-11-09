@@ -1,6 +1,7 @@
 # Own files
 data/VOC/*
 VOC.zip
+FoodRec-env/*
 
 
 # Byte-compiled / optimized / DLL files
