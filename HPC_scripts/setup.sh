@@ -26,7 +26,7 @@ python3 -m venv FoodRecognition-env
 
 source FoodRecognition-env/bin/activate
 python -m pip install --upgrade pip
-python -m pip install torch==1.4.0 numpy torchvision
+python -m pip install torch==1.5.1 torchvision==0.6.1 numpy matplotlib
 
 
 deactivate
