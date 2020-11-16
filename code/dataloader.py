@@ -76,8 +76,8 @@ class foodData:
         """
         returns a dataloader
         ---------------------
-        train: true if trainloader should be returned and false if test loader should be returned
-        iter: true if an iterator of the loader should be returned
+        train   :   true if trainloader should be returned and false if test loader should be returned
+        iter    :   true if an iterator of the loader should be returned
         """
         return (self.train_data_iter if train else self.test_data_iter) if iter else (self.trainloader if train else self.testloader) 
 
@@ -85,7 +85,7 @@ class foodData:
         """
         returns a dataset
         -----------------
-        type: type of data set, can be "train", "test", "trainval" or "val"
+        type    :   type of data set, can be "train", "test", "trainval" or "val"
         """
         if type is "train": 
             return self.voc_trainset
@@ -105,8 +105,8 @@ class foodData:
         """
         returns an image
         -----------------
-        data_type: type of data set, can be "train", "test", "trainval" or "val"
-        idx: index of the image
+        data_type   :   type of data set, can be "train", "test", "trainval" or "val"
+        idx         :   index of the image
         """
         return self.getDataset(data_type)[idx][0]
 
@@ -114,23 +114,24 @@ class foodData:
         """
         returns the class of a specific index of a data set
         -----------------
-        data_type: type of data set, can be "train", "test", "trainval" or "val"
-        idx: index of the image
+        data_type   :   type of data set, can be "train", "test", "trainval" or "val"
+        idx         :   index of the image
         """
         return self.getDataset(data_type)[idx][1]["annotation"]["object"][0]["name"]
 
-    def saveImg(self, data_type:str, idx:int, filename:str):
+    def saveImg(self, data_type:str, idx:int, filename:str, unnormalize : bool = True):
         """
         plots the image from a specific data set
         -----------------
-        data_type: type of data set, can be "train", "test", "trainval" or "val"
-        idx: index of the image
-        filename: name of the saved image
+        data_type   :   type of data set, can be "train", "test", "trainval" or "val"
+        idx         :   index of the image
+        filename    :   name of the saved image
+        unnormalize :   whether to unnormalize before plotting
         """
         import matplotlib.pyplot as plt
         img = data.getImg(data_type, idx)
         # print("size of img: ", img.size())
-        img = img / 2 + 0.5     # unnormalize
+        img = img / 2 + 0.5 if unnormalize else img   # unnormalize
         npimg = img.numpy()
         plt.imshow(np.transpose(npimg, (1, 2, 0)))
         plt.savefig(filename)
@@ -215,7 +216,8 @@ if __name__ == "__main__":
     # test own functions
     print("Test example:", data.getImg("test", 1))
     print("Class of example: ", data.getClass("test", 1))
-    data.saveImg("test", 1, "test.png")
+    data.saveImg("test", 1, "./plots/test.png")
+    data.saveImg("test", 1, "./plots/test2.png", False)
 
     
 
