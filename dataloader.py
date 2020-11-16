@@ -119,6 +119,15 @@ class foodData:
         """
         return self.getDataset(data_type)[idx][1]["annotation"]["object"][0]["name"]
 
+    def getBbox(self, data_type:str, idx:int):
+        """
+        returns the class of a specific index of a data set
+        -----------------
+        data_type: type of data set, can be "train", "test", "trainval" or "val"
+        idx: index of the image
+        """
+        return self.getDataset(data_type)[idx][1]["annotation"]["object"][0]["bndbox"]
+
     def saveImg(self, data_type:str, idx:int, filename:str):
         """
         plots the image from a specific data set
@@ -138,7 +147,7 @@ class foodData:
 
 
 if __name__ == "__main__":
-    data_root = '/mnt/d/Git/GitHub/Studie/02456_Deep_learning/FoodRecognition/data/VOC'
+    data_root = 'C:\\Users\\kathr\\OneDrive\\Documents\\GitHub\\VOC\\VOC'
     data = foodData(data_root)
 
     voc_trainset = data.voc_trainset
@@ -216,6 +225,13 @@ if __name__ == "__main__":
     print("Test example:", data.getImg("test", 1))
     print("Class of example: ", data.getClass("test", 1))
     data.saveImg("test", 1, "test.png")
+    
+    print("Class of example: ", data.getClass("test", 2))
+    data.saveImg("test", 2, "test.png")
+    
+    
+    print("Bbox: ", data.getBbox("test", 2))
+
 
     
 
