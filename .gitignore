@@ -2,6 +2,7 @@
 data/VOC/*
 VOC.zip
 FoodRecognition-env/*
+*/fasterrcnn_12211511_0.701052458187_torchvision_pretrain.pth.701052458187
 
 
 # Byte-compiled / optimized / DLL files
