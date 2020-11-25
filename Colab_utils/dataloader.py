@@ -37,23 +37,20 @@ class foodDataset(torch.utils.data.Dataset):
 
     def __getitem__(self, idx):
       img = self.dataset[idx][0]
-      objects = self.dataset[idx][1]["annotation"]["object"]
-      num_objs = len(objects)
+      obs = self.dataset[idx][1]["annotation"]["object"]
+      num_objs = len(obs)
 
       image_id = torch.tensor([int(os.path.splitext(self.dataset[idx][1]["annotation"]["filename"])[0])])
 
       boxes = []
       labels = torch.ones((num_objs,), dtype=torch.int64)
       for i in range(num_objs):
-        xmin = int(objects[i]["bndbox"]["xmin"])
-        xmax = int(objects[i]["bndbox"]["xmax"])
-        ymin = int(objects[i]["bndbox"]["ymin"])
-        print(ymin)
-        ymax = int(objects[i]["bndbox"]["ymax"])
-        print(ymax)
+        xmin = int(obs[i]["bndbox"]["xmin"])
+        xmax = int(obs[i]["bndbox"]["xmax"])
+        ymin = int(obs[i]["bndbox"]["ymin"])
+        ymax = int(obs[i]["bndbox"]["ymax"])
         boxes.append([xmin, ymin, xmax, ymax])
-        print(boxes)
-        cls = objects[i]["name"]
+        cls = obs[i]["name"]
         try:
           labels[i] *= cls_to_label(cls)
         except KeyError:
