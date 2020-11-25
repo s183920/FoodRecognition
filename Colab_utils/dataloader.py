@@ -13,13 +13,13 @@ classes = ['__background__', 'boiled peas', 'boiled potatoes', 'chopped lettuce'
         'glass of milk', 'glass of water', 'meatballs', 'plain rice', 'plain spaghetti',
         'slice of bread']
 
-# def cls_to_label(cls : str):
-cls_to_label_dict = {j:i for i,j in enumerate(classes)}
-#   return cls_to_label_dict[cls]
+def cls_to_label(cls : str):
+  cls_to_label_dict = {j:i for i,j in enumerate(classes)}
+  return cls_to_label_dict[cls]
   
-# def labels_to_cls(label : int):
-label_to_cls_dict = {i:j for i,j in enumerate(classes)}
-#   return label_to_cls_dict[label]
+def labels_to_cls(label : int):
+  label_to_cls_dict = {i:j for i,j in enumerate(classes)}
+  return label_to_cls_dict[label]
 
 class foodDataset(torch.utils.data.Dataset):
     """
