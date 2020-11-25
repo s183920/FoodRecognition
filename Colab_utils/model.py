@@ -1,7 +1,9 @@
 import torchvision
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
-
-def get_model(pretrained = True : bool): 
+classes = ['__background__', 'boiled peas', 'boiled potatoes', 'chopped lettuce', 'fried egg',
+        'glass of milk', 'glass of water', 'meatballs', 'plain rice', 'plain spaghetti',
+        'slice of bread']
+def get_model(pretrained:bool = True): 
     # load a model pre-trained pre-trained on COCO
     model = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=pretrained)
     
