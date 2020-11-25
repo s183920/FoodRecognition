@@ -48,8 +48,11 @@ class foodDataset(torch.utils.data.Dataset):
         xmin = int(objects[i]["bndbox"]["xmin"])
         xmax = int(objects[i]["bndbox"]["xmax"])
         ymin = int(objects[i]["bndbox"]["ymin"])
+        print(ymin)
         ymax = int(objects[i]["bndbox"]["ymax"])
+        print(ymax)
         boxes.append([xmin, ymin, xmax, ymax])
+        print(boxes)
         cls = objects[i]["name"]
         try:
           labels[i] *= cls_to_label(cls)
