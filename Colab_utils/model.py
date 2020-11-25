@@ -15,19 +15,21 @@ def get_model(pretrained:bool = True):
     # replace the pre-trained head with a new one
     model.roi_heads.box_predictor = FastRCNNPredictor(in_features, num_classes) 
 
+    device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
+    print(f"Device used is: {device}")
+    model.to(device)
+
+    # construct an optimizer
+    params = [p for p in model.parameters() if p.requires_grad]
+    optimizer = torch.optim.SGD(params, lr=0.005,
+                                momentum=0.9, weight_decay=0.0005)
+
+    # and a learning rate scheduler which decreases the learning rate by
+    # 10x every 3 epochs
+    lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer,
+                                                step_size=3,
+                                                gamma=0.1)
+
     return model
 
 
-from engine import train_one_epoch, evaluate
-import utils
-import transforms as T
-
-def get_transform(train):
-    transforms = []
-    # converts the image, a PIL image, into a PyTorch Tensor
-    transforms.append(T.ToTensor())
-    if train:
-        # during training, randomly flip the training images
-        # and ground-truth for data augmentation
-        transforms.append(T.RandomHorizontalFlip(0.5))
-    return T.Compose(transforms)
