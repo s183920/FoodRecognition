@@ -1,3 +1,7 @@
+"""
+Load data into a dataset class that can be used to train our model.
+"""
+
 import torchvision.datasets as datasets
 import numpy as np
 import torch
@@ -48,7 +52,7 @@ class foodDataset(torch.utils.data.Dataset):
         boxes.append([xmin, ymin, xmax, ymax])
         cls = objects[i]["name"]
         try:
-          labels[i] *= cls_to_label[cls]
+          labels[i] *= cls_to_label(cls)
         except KeyError:
           raise KeyError(f"Image {image_id} had an unavailable label: {cls} ")
       boxes = torch.as_tensor(boxes, dtype=torch.float32)
