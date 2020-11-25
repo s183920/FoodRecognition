@@ -13,13 +13,8 @@ classes = ['__background__', 'boiled peas', 'boiled potatoes', 'chopped lettuce'
         'glass of milk', 'glass of water', 'meatballs', 'plain rice', 'plain spaghetti',
         'slice of bread']
 
-def cls_to_label(cls : str):
-  cls_to_label_dict = {j:i for i,j in enumerate(classes)}
-  return cls_to_label_dict[cls]
-  
-def labels_to_cls(label : int):
-  label_to_cls_dict = {i:j for i,j in enumerate(classes)}
-  return label_to_cls_dict[label]
+cls_to_label_dict = {j:i for i,j in enumerate(classes)}
+label_to_cls_dict = {i:j for i,j in enumerate(classes)}
 
 class foodDataset(torch.utils.data.Dataset):
     """
@@ -52,7 +47,7 @@ class foodDataset(torch.utils.data.Dataset):
         boxes.append([xmin, ymin, xmax, ymax])
         cls = obs[i]["name"]
         try:
-          labels[i] *= cls_to_label(cls)
+          labels[i] *= cls_to_label_dict[cls]
         except KeyError:
           raise KeyError(f"Image {image_id} had an unavailable label: {cls} ")
       boxes = torch.as_tensor(boxes, dtype=torch.float32)
