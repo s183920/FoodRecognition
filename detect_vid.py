@@ -65,6 +65,7 @@ while(cap.isOpened()):
         frame_count += 1
         # press `q` to exit
         wait_time = max(1, int(fps/4))
+        image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR) ##
         cv2.imshow('image', image)
         out.write(image)
         if cv2.waitKey(wait_time) & 0xFF == ord('q'):
