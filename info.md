@@ -9,3 +9,6 @@ https://github.com/jwyang/faster-rcnn.pytorch
 https://towardsdatascience.com/training-yolo-for-object-detection-in-pytorch-with-your-custom-dataset-the-simple-way-1aa6f56cf7d9 
 
 https://towardsdatascience.com/yolov3-pytorch-streaming-on-google-colab-16f4fe72e7b 
+
+# Bounding box
+https://blog.mturk.com/tutorial-retrieving-bounding-box-image-annotations-from-mturk-253b86cb7502
