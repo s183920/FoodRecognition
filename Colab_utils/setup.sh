@@ -39,3 +39,8 @@ if [ ! -d models ]
 then 
   mkdir models
 fi
+
+if [ ! -d logs ]
+then 
+  mkdir logs
+fi
