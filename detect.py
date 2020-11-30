@@ -23,8 +23,9 @@ parser.add_argument('-m', '--min-size', dest='min_size', default=800,
 args = vars(parser.parse_args())
 
 # Load model
-model = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True, 
-                                                    min_size=args['min_size'])
+#model = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True, 
+                                                    #min_size=args['min_size'])
+model = torch.load("model_epoch18.pth",map_location=torch.device('cpu'))
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
