@@ -4,6 +4,8 @@
 Created on Thu Nov 26 00:18:42 2020
 
 @author: hso
+
+This .py-file follows the structure found in https://debuggercafe.com/faster-rcnn-object-detection-with-pytorch/
 """
 
 import torchvision.transforms as transforms
@@ -12,10 +14,10 @@ import numpy
 import numpy as np
 from coco_names import COCO_INSTANCE_CATEGORY_NAMES as coco_names
 
-# this will help us create a different color for each class
+# Create differnt color for each class
 COLORS = np.random.uniform(0, 255, size=(len(coco_names), 3))
 
-# define the torchvision image transforms
+# Define Torchvision image transforms
 transform = transforms.Compose([
     transforms.ToTensor(),
 ])
@@ -23,24 +25,21 @@ transform = transforms.Compose([
 def predict(image, model, device, detection_threshold):
     # transform the image to tensor
     image = transform(image).to(device)
-    image = image.unsqueeze(0) # add a batch dimension
-    outputs = model(image) # get the predictions on the image
-    # print the results individually
-    # print(f"BOXES: {outputs[0]['boxes']}")
-    # print(f"LABELS: {outputs[0]['labels']}")
-    # print(f"SCORES: {outputs[0]['scores']}")
-    # get all the predicited class names
+    image = image.unsqueeze(0) # Add batch dimension
+    outputs = model(image) # Get predictions on the image
+    
+    # Get predicited class names
     pred_classes = [coco_names[i] for i in outputs[0]['labels'].cpu().numpy()]
-    # get score for all the predicted objects
+    # Get score for the predicted objects
     pred_scores = outputs[0]['scores'].detach().cpu().numpy()
-    # get all the predicted bounding boxes
+    # Get the predicted bounding boxes
     pred_bboxes = outputs[0]['boxes'].detach().cpu().numpy()
-    # get boxes above the threshold score
+    # Get boxes above the threshold score
     boxes = pred_bboxes[pred_scores >= detection_threshold].astype(np.int32)
     return boxes, pred_classes, outputs[0]['labels']
 
 def draw_boxes(boxes, classes, labels, image):
-    # read the image with OpenCV
+    # Read the image with OpenCV
     image = cv2.cvtColor(np.asarray(image), cv2.COLOR_BGR2RGB)
     for i, box in enumerate(boxes):
         color = COLORS[labels[i]]
