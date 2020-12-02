@@ -44,3 +44,8 @@ if [ ! -d logs ]
 then 
   mkdir logs
 fi
+
+if [ ! -d loss ]
+then 
+  mkdir loss
+fi
