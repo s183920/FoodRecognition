@@ -40,10 +40,21 @@ then
   mkdir models
 fi
 
+if [ ! -d models/BO ]
+then 
+  mkdir models/BO
+fi
+
 if [ ! -d logs ]
 then 
   mkdir logs
 fi
+
+if [ ! -d logs/BO ]
+then 
+  mkdir logs/BO
+fi
+
 
 if [ ! -d loss ]
 then 
