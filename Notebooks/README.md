@@ -1,6 +1,8 @@
 # What are the 3 notebooks for?
 
-If you're having trouble with cython, coco or other dependencies try running the dependencies part of the first notebook
+If you're having trouble with cython, coco or other dependencies try running the dependencies part of the first notebook. <br>
+
+A pretrained model can be found [here](https://drive.google.com/file/d/1eqj1dcnDcjguICUyLHNfflyZsmF3BNA9/view?usp=sharing).
 
 ## FoodRec
 This notebook was used for training a model and can be used both with and without bayesian optimisation. <br>
