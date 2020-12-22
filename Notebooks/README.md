@@ -1,5 +1,7 @@
 # What are the 3 notebooks for?
 
+If you're having trouble with cython, coco or other dependencies try running the dependencies part of the first notebook
+
 ## FoodRec
 This notebook was used for training a model and can be used both with and without bayesian optimisation. <br>
 This notebook can be run in [Google Colab](https://colab.research.google.com/drive/13KQoEpEG8vP76_OXHPJjgqI6lOxsaLxY?usp=sharing)
