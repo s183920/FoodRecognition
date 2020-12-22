@@ -7,6 +7,8 @@ Created on Thu Nov 26 00:21:24 2020
 This .py-file follows the structure found in https://debuggercafe.com/faster-rcnn-object-detection-with-pytorch/
 
 ## Detect food in video/live webcam - given pretrained model ##
+- run in terminal: "python detect_vid.py" (for live/webcam)
+  · for video: "python detect_vid.py --input input/video2.mp4"
 
 """
 
