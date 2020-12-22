@@ -6,3 +6,6 @@ https://drive.google.com/file/d/1hz5AxTTVcfQz1dK0uoyfE89fMrZXQEzk/view?usp=shari
 
 ## Live Prediction Demonstration (gif)
 https://drive.google.com/file/d/1yUpbrad-ilQh30jHkrj_2S8m5Q0WimVj/view?usp=sharing
+
+## Notebooks
+In the Notebooks folder, notebooks are given to train, evaluate and demonstrate a model.
